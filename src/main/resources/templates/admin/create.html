@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать клиента</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <h1>Создать клиента</h1>
+    <form th:action="@{/admin}" method="post" th:object="${client}">
+        <div class="form-group">
+            <label for="clientSurname">Фамилия</label>
+            <input type="text" id="clientSurname" th:field="*{clientSurname}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="clientName">Имя</label>
+            <input type="text" id="clientName" th:field="*{clientName}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="clientPatronymic">Отчество</label>
+            <input type="text" id="clientPatronymic" th:field="*{clientPatronymic}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="clientPhone">Номер телефона</label>
+            <input type="text" id="clientPhone" th:field="*{clientPhone}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="clientEmail">Адрес электронной почты</label>
+            <input type="email" id="clientEmail" th:field="*{clientEmail}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="clientPreferences">Предпочтения</label>
+            <input type="text" id="clientPreferences" th:field="*{clientPreferences}" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Создать клиента</button>
+    </form>
+</div>
+</body>
+</html>

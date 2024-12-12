@@ -33,7 +33,7 @@ public class Client {
     @Column(name = "Предпочтения")
     private String clientPreferences;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private List<Order> orders;
 }

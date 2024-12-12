@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Скидки")
@@ -21,7 +22,7 @@ public class Discount {
     private String discountTermsOfUse;
 
     @Column(name = "Дата_начала")
-    private LocalDate discountStartDate;
+    private LocalDateTime discountStartDate;
 
     @Column(name = "Процент_скидки")
     private Integer discountPercent;

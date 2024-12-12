@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет по продажам</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container text-center" style="margin-top: 100px;">
+    <h1>Отчет по продажам</h1>
+
+    <div class="mt-5">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Название продукта</th>
+                <th>Название скидки</th>
+                <th>Условия применения</th>
+                <th>Процент скидки</th>
+                <th>Дата начала скидки</th>
+                <th>Дата окончания скидки</th>
+                <th>Количество проданного</th>
+                <th>Общая стоимость продаж</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="report : ${salesReport}">
+                <td th:text="${report.productName}"></td>
+                <td th:text="${report.discountName}"></td>
+                <td th:text="${report.discountConditions}"></td>
+                <td th:text="${report.discountPercentage}"></td>
+                <td th:text="${#temporals.format(report.discountStartDate, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(report.discountEndDate, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${report.quantitySold}"></td>
+                <td th:text="${#numbers.formatDecimal(report.totalSalesAmount, 0, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

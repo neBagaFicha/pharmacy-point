@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз продаж</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <h1>Прогноз продаж</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Название продукта</th>
+            <th>Прогнозируемое количество проданных единиц</th>
+            <th>Прогнозируемая стоимость продаж</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${forecastReport}">
+            <td th:text="${report.productName}"></td>
+            <td th:text="${report.forecastedQuantitySold}"></td>
+            <td th:text="${#numbers.formatDecimal(report.forecastedSalesAmount, 0, 'COMMA', 2, 'POINT')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Администратор</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container text-center" style="margin-top: 100px;">
+    <h1>Панель администратора</h1>
+    <div class="mt-4">
+        <a th:href="@{/admin/create}" class="btn btn-primary btn-lg">Добавить клиента</a>
+        <a th:href="@{/admin/read-all}" class="btn btn-info btn-lg">Считать клиентов</a>
+        <a th:href="@{/admin/sales-report}" class="btn btn-secondary btn-lg">Отчет по продажам</a>
+        <a th:href="@{/admin/forecast-report}" class="btn btn-secondary btn-lg">Прогноз продаж</a>
+    </div>
+</div>
+</body>
+</html>
