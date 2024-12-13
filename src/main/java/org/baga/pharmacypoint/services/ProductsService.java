@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.baga.pharmacypoint.models.Product;
 import org.baga.pharmacypoint.repos.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ public class ProductsService {
     private final ProductsRepository productsRepository;
 
     public List<Product> readAll() {
-        return productsRepository.findAll();
+        return productsRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     public Product read(int id) {

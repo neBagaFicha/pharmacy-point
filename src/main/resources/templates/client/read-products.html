@@ -27,7 +27,7 @@
             <td th:text="${product.productDescription}"></td>
             <td th:text="${product.productCategory}"></td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#buyModal" th:onclick="'setProductId(' + ${product.id} + ')'">Купить</button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#buyModal" th:onclick="'setProductId(' + ${product.id} + ',' + ${product.productReminder} + ')'">Купить</button>
             </td>
         </tr>
         </tbody>
@@ -51,6 +51,7 @@
                         <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
                     </div>
                     <input type="hidden" id="productId" name="productId">
+                    <input type="hidden" id="productReminder" name="productReminder">
                     <button type="submit" class="btn btn-primary">Купить</button>
                 </form>
             </div>
@@ -59,21 +60,43 @@
 </div>
 
 <script>
-    function setProductId(productId) {
+    function setProductId(productId, productReminder) {
         document.getElementById('productId').value = productId;
+        document.getElementById('productReminder').value = productReminder;
     }
 
     document.getElementById('buyForm').addEventListener('submit', function(event) {
         event.preventDefault();
         var productId = document.getElementById('productId').value;
-        var quantity = document.getElementById('quantity').value;
+        var quantity = parseInt(document.getElementById('quantity').value);
+        var productReminder = parseInt(document.getElementById('productReminder').value);
 
-        // Здесь можно добавить логику для отправки данных на сервер
-        console.log('Product ID:', productId);
-        console.log('Quantity:', quantity);
+        if (isNaN(quantity) || quantity <= 0 || quantity > productReminder) {
+            alert('Количество должно быть больше нуля и меньше или равно остатку.');
+            return;
+        }
 
-        // Закрыть модальное окно
-        $('#buyModal').modal('hide');
+        fetch('/client/buy-product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'productId': productId,
+                'quantity': quantity
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                // Закрыть модальное окно
+                $('#buyModal').modal('hide');
+                // Обновить страницу или часть страницы
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     });
 </script>
 
