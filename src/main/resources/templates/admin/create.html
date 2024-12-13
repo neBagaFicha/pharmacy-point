@@ -12,26 +12,32 @@
         <div class="form-group">
             <label for="clientSurname">Фамилия</label>
             <input type="text" id="clientSurname" th:field="*{clientSurname}" class="form-control" required>
+            <div style="color:red" th:if="${#fields.hasErrors('clientSurname')}" th:errors="*{clientSurname}">Ошибка фамилии</div>
         </div>
         <div class="form-group">
             <label for="clientName">Имя</label>
             <input type="text" id="clientName" th:field="*{clientName}" class="form-control" required>
+            <div style="color:red" th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}">Ошибка имени</div>
         </div>
         <div class="form-group">
             <label for="clientPatronymic">Отчество</label>
             <input type="text" id="clientPatronymic" th:field="*{clientPatronymic}" class="form-control">
+            <div style="color:red" th:if="${#fields.hasErrors('clientPatronymic')}" th:errors="*{clientPatronymic}">Ошибка отчества</div>
         </div>
         <div class="form-group">
             <label for="clientPhone">Номер телефона</label>
             <input type="text" id="clientPhone" th:field="*{clientPhone}" class="form-control" required>
+            <div style="color:red" th:if="${#fields.hasErrors('clientPhone')}" th:errors="*{clientPhone}">Ошибка номера телефона</div>
         </div>
         <div class="form-group">
             <label for="clientEmail">Адрес электронной почты</label>
             <input type="email" id="clientEmail" th:field="*{clientEmail}" class="form-control" required>
+            <div style="color:red" th:if="${#fields.hasErrors('clientEmail')}" th:errors="*{clientEmail}">Ошибка адреса электронной почты</div>
         </div>
         <div class="form-group">
             <label for="clientPreferences">Предпочтения</label>
             <input type="text" id="clientPreferences" th:field="*{clientPreferences}" class="form-control">
+            <div style="color:red" th:if="${#fields.hasErrors('clientPreferences')}" th:errors="*{clientPreferences}">Ошибка предпочтений</div>
         </div>
         <button type="submit" class="btn btn-primary">Создать клиента</button>
     </form>
