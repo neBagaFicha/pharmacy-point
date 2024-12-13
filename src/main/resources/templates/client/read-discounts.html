@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список скидок</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <h1>Список скидок</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Условия применения</th>
+            <th>Дата начала</th>
+            <th>Процент скидки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="discount : ${discounts}">
+            <td th:text="${discount.discountName}"></td>
+            <td th:text="${discount.discountTermsOfUse}"></td>
+            <td th:text="${#temporals.format(discount.discountStartDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${discount.discountPercent}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
