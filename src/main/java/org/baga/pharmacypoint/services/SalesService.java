@@ -24,7 +24,7 @@ public class SalesService {
     private final ClientsRepository clientsRepository;
 
     @Transactional
-    public void buyProduct(int productId, int quantity) {
+    public void buyProduct(int productId, int quantity, int clientId) {
         Product product = productsRepository.findById(productId).orElseThrow(RuntimeException::new);
 
         if (product.getProductReminder() < quantity) {
@@ -34,7 +34,7 @@ public class SalesService {
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus("Оплачен");
-        order.setClient(clientsRepository.findById(1).orElseThrow(RuntimeException::new));
+        order.setClient(clientsRepository.findById(clientId).orElseThrow(RuntimeException::new));
         ordersRepository.save(order);
 
         Sale sale = new Sale();

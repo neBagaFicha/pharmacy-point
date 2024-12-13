@@ -1,5 +1,6 @@
 package org.baga.pharmacypoint.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.baga.pharmacypoint.repos.BestOffersReportRepository;
 import org.baga.pharmacypoint.services.DiscountsService;
@@ -23,31 +24,52 @@ public class ClientController {
     private final SalesService salesService;
 
     @GetMapping("")
-    public String index() {
-        return "client/index-client";
+    public String index(HttpSession session) {
+        if ("client".equals(session.getAttribute("role"))) {
+            return "client/index-client";
+        } else {
+            return "redirect:/login-client";
+        }
     }
 
     @GetMapping("/read-products")
-    public String readProducts(Model model) {
-        model.addAttribute("products", productsService.readAll());
-        return "client/read-products";
+    public String readProducts(Model model, HttpSession session) {
+        if ("client".equals(session.getAttribute("role"))) {
+            model.addAttribute("products", productsService.readAll());
+            return "client/read-products";
+        } else {
+            return "redirect:/login-client";
+        }
     }
 
     @GetMapping("/read-discounts")
-    public String readDiscounts(Model model) {
-        model.addAttribute("discounts", discountsService.readAll());
-        return "client/read-discounts";
+    public String readDiscounts(Model model, HttpSession session) {
+        if ("client".equals(session.getAttribute("role"))) {
+            model.addAttribute("discounts", discountsService.readAll());
+            return "client/read-discounts";
+        } else {
+            return "redirect:/login-client";
+        }
     }
 
     @GetMapping("/best-offers-report")
-    public String bestOffersReport(Model model) {
-        model.addAttribute("bestOffersReport", bestOffersReportRepository.getReport());
-        return "client/best-offers-report";
+    public String bestOffersReport(Model model, HttpSession session) {
+        if ("client".equals(session.getAttribute("role"))) {
+            model.addAttribute("bestOffersReport", bestOffersReportRepository.getReport());
+            return "client/best-offers-report";
+        } else {
+            return "redirect:/login-client";
+        }
     }
 
     @PostMapping("/buy-product")
-    public String buyProduct(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity) {
-        salesService.buyProduct(productId, quantity);
-        return "redirect:/client/read-products";
+    public String buyProduct(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity, HttpSession session) {
+        if ("client".equals(session.getAttribute("role"))) {
+            Integer clientId = (Integer) session.getAttribute("clientId");
+            salesService.buyProduct(productId, quantity, clientId);
+            return "redirect:/client/read-products";
+        } else {
+            return "redirect:/login-client";
+        }
     }
 }
