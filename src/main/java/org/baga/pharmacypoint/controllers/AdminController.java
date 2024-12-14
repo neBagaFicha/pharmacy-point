@@ -1,6 +1,7 @@
 package org.baga.pharmacypoint.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.baga.pharmacypoint.dto.SalesAnalysisReport;
 import org.baga.pharmacypoint.models.Client;
@@ -10,6 +11,7 @@ import org.baga.pharmacypoint.services.ClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -50,12 +52,17 @@ public class AdminController {
     }
 
     @PostMapping("")
-    public String create(@ModelAttribute("client") Client client, HttpSession session) {
-        if ("admin".equals(session.getAttribute("role"))) {
-            clientsService.save(client);
-            return "redirect:/admin";
-        } else {
-            return "redirect:/login-admin";
+    public String create(HttpSession session, @ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "admin/create";
+        }
+        else{
+            if ("admin".equals(session.getAttribute("role"))) {
+                clientsService.save(client);
+                return "redirect:/admin";
+            } else {
+                return "redirect:/login-admin";
+            }
         }
     }
 
@@ -80,14 +87,19 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("client") Client client, @PathVariable("id") int id, HttpSession session) {
-        if ("admin".equals(session.getAttribute("role"))) {
-            clientsService.update(client, id);
-            return "redirect:/admin";
+    public String update(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult, @PathVariable("id") int id, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "admin/edit";
         } else {
-            return "redirect:/login-admin";
+            if ("admin".equals(session.getAttribute("role"))) {
+                clientsService.update(client, id);
+                return "redirect:/admin";
+            } else {
+                return "redirect:/login-admin";
+            }
         }
     }
+
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id, HttpSession session) {

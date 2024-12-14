@@ -3,6 +3,7 @@ package org.baga.pharmacypoint.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
@@ -29,12 +30,14 @@ public class Client {
     private String clientName;
 
     @Column(name = "Отчество_клиента")
+    @NotEmpty(message = "Отчество не может быть пустым")
     @Size(max = 50, message = "Отчество не может быть длиннее 50 символов")
     private String clientPatronymic;
 
     @Column(name = "Номер_телефона_клиента")
     @NotEmpty(message = "Номер телефона не может быть пустым")
-    @Size(max = 15, message = "Номер телефона не может быть длиннее 15 символов")
+    @Size(max = 12, message = "Номер телефона не может быть длиннее 15 символов")
+    @Pattern(regexp = "^\\+7\\d{10}$", message = "Номер телефона должен быть в формате +7XXXXXXXXXX")
     private String clientPhone;
 
     @Column(name = "Адрес_электронной_почты_клиента")
